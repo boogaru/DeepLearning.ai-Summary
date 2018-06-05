@@ -94,18 +94,16 @@ Here is the course summary as given on the course [link](https://www.coursera.or
     + Neural style transfer
         * Thay đổi kiểu ảnh bằng cách dùng ảnh khác
 - Một trong những thách thức của computer vision là kích thước ảnh quá lớn, và chúng ta lại muốn thuật toán làm hoạt động chính xác và nhanh
-    + Ví dụ: tấm ảnh 1000x1000
-  - For example, a `1000x1000` image will represent 3 million feature/input to the full connected neural network. If the following hidden layer contains 1000, then we will want to learn weights of the shape `[1000, 3 million]` which is 3 billion parameter only in the first layer and thats so computationally expensive!
-- One of the solutions is to build this using **convolution layers** instead of the **fully connected layers**.
+    + Ví dụ: tấm ảnh 1000x1000 với 3 triệu feature và sử dụng fully connected neural network. Giả sử lớn ẩn chứa 1000 node, khi đó ta phải train để tìm ra ma trận trọng số [1000, 3 triệu], khối lượng tính toán quá khổng lồ!
+- Một trong các giải pháp là sử dụng **convolution layers** thay vì **fully connected layers**.
 
 ### Edge detection example
 
-- The convolution operation is one of the fundamentals blocks of a CNN. One of the examples about convolution is the image edge detection operation.
-- Early layers of CNN might detect edges then the middle layers will detect parts of objects and the later layers will put the these parts together to produce an output.
-- In an image we can detect vertical edges, horizontal edges, or full edge detector.
+- Toán tử tích chập (convolution operation) là một trong những nền tảng cho CNN. Một ví dụ cho ứng dụng của tích chập đó là phát hiện cạnh cho ảnh
+- Layers đầu của CNN có thể phát hiện cạnh, đến middle layers sẽ phát hiện parts của vật thể và layers cuối sẽ kết hợp các parts để tạo ra output
 - Vertical edge detection:
-  - An example of convolution operation to detect vertical edges:
-    - ![](Images/01.png)
+  - Một ví dụ của toán tử tích chập để phát hiện cạnh đứng:
+     ![](Images/01.png)
   - In the last example a `6x6` matrix convolved with `3x3` filter/kernel gives us a `4x4` matrix.
   - If you make the convolution operation in TensorFlow you will find the function `tf.nn.conv2d`. In keras you will find `Conv2d` function.
   - The vertical edge detection filter will find a `3x3` place in an image where there are a bright region followed by a dark region.
