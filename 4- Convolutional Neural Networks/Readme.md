@@ -81,20 +81,20 @@ Here is the course summary as given on the course [link](https://www.coursera.or
 ### Computer vision
 
 - Computer vision là một trong những ứng dụng có tốc độ phát triển vũ bão nhờ vào deep learning
-- Some of the applications of computer vision that are using deep learning includes:
-  - Self driving cars.
-  - Face recognition.
-- Deep learning is also enabling new types of art to be created.
-- Rapid changes to computer vision are making new applications that weren't possible a few years ago.
-- Computer vision deep leaning techniques are always evolving making a new architectures which can help us in other areas other than computer vision.
-  - For example, Andrew Ng took some ideas of computer vision and applied it in speech recognition.
-- Examples of a computer vision problems includes:
-  - Image classification.
-  - Object detection.
-    - Detect object and localize them.
-  - Neural style transfer
-    - Changes the style of an image using another image.
-- One of the challenges of computer vision problem that images can be so large and we want a fast and accurate algorithm to work with that.
+- Có thể kể ra những ứng dụng của computer vision xử dụng deep learning như là:
+    + Self driving cars
+    + Face recognition
+- Deep learning cũng mở ra một dạng nghệ thuật mới
+- Computer vision với kĩ thuật deep learning luôn kết hợp với nhau để tạo ra những kiến trúc mới có thể giúp ta trong những lĩnh vực khác của computer vision
+    + Ví dụ, Andrew Ng áp dụng ý tưởng từ computer vision vào nhận dạng giọng nói
+- Ví dụ về computer vision:
+    + Image classification
+    + Object dectection
+        * Phát hiện vật thể và định vị nó
+    + Neural style transfer
+        * Thay đổi kiểu ảnh bằng cách dùng ảnh khác
+- Một trong những thách thức của computer vision là kích thước ảnh quá lớn, và chúng ta lại muốn thuật toán làm hoạt động chính xác và nhanh
+    + Ví dụ: tấm ảnh 1000x1000
   - For example, a `1000x1000` image will represent 3 million feature/input to the full connected neural network. If the following hidden layer contains 1000, then we will want to learn weights of the shape `[1000, 3 million]` which is 3 billion parameter only in the first layer and thats so computationally expensive!
 - One of the solutions is to build this using **convolution layers** instead of the **fully connected layers**.
 
