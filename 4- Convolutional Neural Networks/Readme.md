@@ -163,34 +163,34 @@ Here is the course summary as given on the course [link](https://www.coursera.or
 
 - Ký hiệu stride `S`.
 
-- Khi chúng ta tạo.
+- Khi chúng ta tính tích chập, chúng ta dùng `S` để báo số lượng pixels mà chúng ta sẽ trượt khi tích chập với filter/kernel. Trong ví dụ trên thì ta trượt S = 1.
 
-- Now the general rule are:
-  -  if a matrix `nxn` is convolved with `fxf` filter/kernel and padding `p` and stride `s` it give us `(n+2p-f)/s + 1,(n+2p-f)/s + 1` matrix. 
+- Ta có quy tắc:
+  -  Nếu ma trận `nxn` tích chập với `fxf` filter/kernel và padding `p` và stride `s` sẽ trả về ma trận `(n+2p-f)/s + 1,(n+2p-f)/s + 1`. 
 
-- In case `(n+2p-f)/s + 1` is fraction we can take **floor** of this value.
+- Trường hợp `(n+2p-f)/s + 1` là số lẻ, ta có thể làm tròn **floor** giá trị này.
 
-- In math textbooks the conv operation is filpping the filter before using it. What we were doing is called cross-correlation operation but the state of art of deep learning is using this as conv operation.
+- Trong toán học thì toán tử tích chập là phải flip ma trận filter trước khi dùng. Và những gì chúng ta làm ở trên gọi là toán tử tương quan (cross-correlation operation). Nhưng để làm đơn giảm tính toán và vì khả năng tự học của CNN nên ta vẫn dùng phép tương quan thay vì tích chập.
 
-- Same convolutions is a convolution with a padding so that output size is the same as the input size. Its given by the equation:
+- Tương tự như tích chập là tích chập với padding để kích thước output = kích thước input:
 
   ```
   p = (n*s - n + f - s) / 2
-  When s = 1 ==> P = (f-1) / 2
+  Khi s = 1 ==> P = (f-1) / 2
   ```
 
 ### Convolutions over volumes
 
-- We see how convolution works with 2D images, now lets see if we want to convolve 3D images (RGB image)
-- We will convolve an image of height, width, # of channels with a filter of a height, width, same # of channels. Hint that the image number channels and the filter number of channels are the same.
-- We can call this as stacked filters for each channel!
-- Example:
+- Chúng ta đã biết cách tích chập hoạt động với ảnh 2D, ta hãy xem tích chập hoạt động thế nào với ảnh 3D (RGB image)
+- Chúng ta sẽ tích chập 1 tấm ảnh có height, width, # channels với 1 filter có height, width, cùng số channel với bức ảnh.
+- Chúng ta có thể gọi nó là stacked filters cho mỗi channel!
+- Ví dụ:
   - Input image: `6x6x3`
   - Filter: `3x3x3`
   - Result image: `4x4x1`
   - In the last result p=0, s=1
-- Hint the output here is only 2D.
-- We can use multiple filters to detect multiple features or edges. Example.
+- Gợi ý : output chỉ là 2D.
+- Chúng ta có thể dùng nhiều filters để phát hiện nhiều đặc trưng hoặc cạnh. Ví dụ:
   - Input image: `6x6x3`
   - 10 Filters: `3x3x3`
   - Result image: `4x4x10`
@@ -198,17 +198,18 @@ Here is the course summary as given on the course [link](https://www.coursera.or
 
 ### One Layer of a Convolutional Network
 
-- First we convolve some filters to a given input and then add a bias to each filter output and then get RELU of the result. Example:
+- Trước tiên chúng ta tích chập vài filters với input và sau đó thêm bias cho mỗi filter output và sau đó tính RELU cho kết quả:
   - Input image: `6x6x3`         `# a0`
   - 10 Filters: `3x3x3`         `#W1`
   - Result image: `4x4x10`     `#W1a0`
-  - Add b (bias) with `10x1` will get us : `4x4x10` image      `#W1a0 + b`
-  - Apply RELU will get us: `4x4x10` image                `#A1 = RELU(W1a0 + b)`
+  - Thêm b (bias) `10x1` sẽ cho ra : `4x4x10` image      `#W1a0 + b`
+  - Apply RELU sẽ cho ra: `4x4x10` image                `#A1 = RELU(W1a0 + b)`
   - In the last result p=0, s=1
-  - Hint number of parameters here are: `(3x3x3x10) + 10 = 280`
+  -Số lượng parameter là: `(3x3x3x10) + 10 = 280`
 - The last example forms a layer in the CNN.
-- Hint: no matter the size of the input, the number of the parameters is same if filter size is same. That makes it less prone to overfitting.
-- Here are some notations we will use. If layer l is a conv layer:
+- Gợi ý : kích thước input không ảnh hưởng đến số lượng parameters, mà nó chỉ phụ thuộc vào kích thước và số lượng channel của filter.
+- Đây là những ký hiệu sẽ sử dụng. Nếu layer l là một conv layer:
+-  $n_H^{[l-1]}$, $n_W^{[l-1]}$, $n_C^{[l-1]}$
 
   ```
   Hyperparameters
