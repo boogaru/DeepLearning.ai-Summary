@@ -318,11 +318,12 @@ Here is the course summary as given on the course [link](https://www.coursera.or
 - To consider using these blocks together you should look at other working examples firsts to get some intuitions.
 
 ### Why convolutions?
-- Hai lý do chính để dùng tích chập là :
+- Hai lý do chính để dùng nhiều tích chập layer hơn là FC layer:
     + Share parameter
         + 1 cái feature detector (như vertical edge detector) hữu dụng cho phần này của bức ảnh thì cũng có thể hữu dụng cho phần khác của bức ảnh, nên việc share parameter sẽ giảm việc tính toán
-  - sparsity of connections.
-    - In each layer, each output value depends only on a small number of inputs which makes it translation invariance.
+    + Kết nối thưa:
+        + Trong mỗi layer, mỗi output value chỉ phụ thuộc một vài feature của input (mỗi pixel của output matrix chỉ phụ thuộc vài pixels của input matrix)
+- Thêm nữa là số lượng parameter khi dùng conv layer sẽ ít hơn nhiều khi dùng FC layer, nó giúp đẩy nhanh tốc độc training, giảm khả năng overfitting.
 - Putting it all together:
    ![](Images/04.png)
 
@@ -353,27 +354,25 @@ Here is the course summary as given on the course [link](https://www.coursera.or
    ![](Images/05.png)
     - Model này được xuất bản năm 1998. Layer cuối cùng ko dùng softmax.
     - Nó có 60k parameters.
-
-  - The dimensions of the image decreases as the number of channels increases.
-  - `Conv ==> Pool ==> Conv ==> Pool ==> FC ==> FC ==> softmax` this type of arrangement is quite common.
-  - The activation function used in the paper was Sigmoid and Tanh. Modern implementation uses RELU in most of the cases.
+    - Chiều của ảnh giảm khi số lượng channels tăng lên
+    - `Conv ==> Pool ==> Conv ==> Pool ==> FC ==> FC ==> softmax`
+    - Hàm kích hoạt được dùng trong paper là Sigmod và Tanh. Ngày nay hàm RELU được dùng trong hầu hết các trường hợp.
+  
   - [[LeCun et al., 1998. Gradient-based learning applied to document recognition]](http://ieeexplore.ieee.org/document/726791/?reload=true)
 
 - **AlexNet**
+    + Mục tiêu của model là phân ra 1000 class. Đây là hình vẽ của model
+   ![](Images/06.png)
 
-  - Named after Alex Krizhevsky who was the first author of this paper. The other authors includes Jeoffery Hinton.
-
-  - The goal for the model was the ImageNet challenge which classifies images into 1000 classes. Here are the drawing of the model:
-
-  - ![](Images/06.png)
-
-  - Summary:
+    + Tổng kết:
 
     - ```
       Conv => Max-pool => Conv => Max-pool => Conv => Conv => Conv => Max-pool ==> Flatten ==> FC ==> FC ==> Softmax
       ```
 
-  - Similar to LeNet-5 but bigger.
+  -y1- Tương tự LeNet-5 nhưng lớn hơn
+  -y1- Có 60 triệu parameter.
+  -y1- Dùng hàm kích hoạt RELU
 
   - Has 60 Million parameter compared to 60k parameter of LeNet-5.
 
