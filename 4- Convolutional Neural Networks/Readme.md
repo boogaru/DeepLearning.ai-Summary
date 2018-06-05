@@ -80,7 +80,7 @@ Here is the course summary as given on the course [link](https://www.coursera.or
 
 ### Computer vision
 
-- Computer vision is one of the applications that are rapidly active thanks to deep learning.
+- Computer vision là một trong những ứng dụng có tốc độ phát triển vũ bão nhờ vào deep learning
 - Some of the applications of computer vision that are using deep learning includes:
   - Self driving cars.
   - Face recognition.
