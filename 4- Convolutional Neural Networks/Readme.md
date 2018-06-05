@@ -320,11 +320,11 @@ Here is the course summary as given on the course [link](https://www.coursera.or
 ### Why convolutions?
 - Hai lý do chính để dùng tích chập là :
     + Share parameter
-        + A feature detector (such as a vertical edge detector) that's useful in one part of the image is probably useful in another part of the image.
+        + 1 cái feature detector (như vertical edge detector) hữu dụng cho phần này của bức ảnh thì cũng có thể hữu dụng cho phần khác của bức ảnh, nên việc share parameter sẽ giảm việc tính toán
   - sparsity of connections.
     - In each layer, each output value depends only on a small number of inputs which makes it translation invariance.
 - Putting it all together:
-  - ![](Images/04.png)
+   ![](Images/04.png)
 
 ## Deep convolutional models: case studies
 
@@ -332,27 +332,28 @@ Here is the course summary as given on the course [link](https://www.coursera.or
 
 ### Why look at case studies?
 
-- We learned about Conv layer, pooling layer, and fully connected layers. It turns out that computer vision researchers spent the past few years on how to put these layers together.
-- To get some intuitions you have to see the examples that has been made.
-- Some neural networks architecture that works well in some tasks can also work well in other tasks.
-- Here are some classical CNN networks:
+- Chúng ta học về Conv layer, pooling layer, fully connected layers. Các nhà nghiên cứu thị giác máy tính đã mất vài năm để biết cách kết hợp các layers lại với nhau.
+- Để có cái nhìn trực quan, ta hãy xem qua ví dụ.
+- Một vài kiến trúc neural networks có thể làm tốt nhiệm vụ này và kiêm thêm những nhiệm vụ khác.
+- Đây là một số mạng CNN cổ điển:
   - **LeNet-5**
   - **AlexNet**
   - **VGG**
-- The best CNN architecture that won the last ImageNet competition is called **ResNet** and it has 152 layers!
-- There are also an architecture called **Inception** that was made by Google that are very useful to learn and apply to your tasks.
-- Reading and trying the mentioned models can boost you and give you a lot of ideas to solve your task.
+- Kiến trúc CNN tốt nhất đã từng thắng giải ImageNet là **ResNet** và nó có 152 layers!
+- Kiến trúc **Inception** được xây dựng bởi Google rất có ích cho ta học tập và ứng dụng.
+- Nghiên cứu và thử những models đã đề cập ở trên sẽ giúp ích rất nhiều cho bản thân.
 
 ### Classic networks
 
-- In this section we will talk about classic networks which are **LeNet-5**, **AlexNet**, and **VGG**.
+- Trong phần này chúng ta sẽ nói về những mạng cổ điển : **LeNet-5**, **AlexNet**, và **VGG**
+
 
 - **LeNet-5**
+    - Mục tiêu của model này là xác định số viết tay ở dạng ảnh xám `32x32x1`. Đây là hình ảnh của nó
+   ![](Images/05.png)
+    - Model này được xuất bản năm 1998. Layer cuối cùng ko dùng softmax.
+    - Nó có 60k parameters.
 
-  - The goal for this model was to identify handwritten digits in a `32x32x1` gray image. Here are the drawing of it:
-  - ![](Images/05.png)
-  - This model was published in 1998. The last layer wasn't using softmax back then.
-  - It has 60k parameters.
   - The dimensions of the image decreases as the number of channels increases.
   - `Conv ==> Pool ==> Conv ==> Pool ==> FC ==> FC ==> softmax` this type of arrangement is quite common.
   - The activation function used in the paper was Sigmoid and Tanh. Modern implementation uses RELU in most of the cases.
