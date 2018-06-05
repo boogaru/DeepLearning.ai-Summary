@@ -104,12 +104,12 @@ Here is the course summary as given on the course [link](https://www.coursera.or
 - Vertical edge detection:
   - Một ví dụ của toán tử tích chập để phát hiện cạnh đứng:
      ![](Images/01.png)
-  - In the last example a `6x6` matrix convolved with `3x3` filter/kernel gives us a `4x4` matrix.
-  - If you make the convolution operation in TensorFlow you will find the function `tf.nn.conv2d`. In keras you will find `Conv2d` function.
-  - The vertical edge detection filter will find a `3x3` place in an image where there are a bright region followed by a dark region.
-  - If we applied this filter to a white region followed by a dark region, it should find the edges in between the two colors as a positive value. But if we applied the same filter to a dark region followed by a white region it will give us negative values. To solve this we can use the abs function to make it positive.
+  - Như hình thì ma trận `6x6` được tích chập với filter/kernel `3x3` và tạo thành ma trận `4x4`
+  - Nếu muốn thực hiện toán tử tích chập trong TensorFlow bạn có thể dùng hàm `tf.nn.conv2d`. Trong Keras thì tìm hiểu về `Conv2d` function.
+  - Filter phát hiện cạnh đúng sẽ tìm khung `3x3` trong bức ảnh nơi mà có vùng sáng và vùng tối tách biệt (các cạnh sinh ra từ đây)
+  - Nếu ta ứng dụng filter này cho vùng sáng kế bên là vùng tối thì nó sẽ tìm ra cạnh giữa 2 vùng và cho ra giá trị dương. Nhưng nếu ta áp dụng filter này cho vùng tối kế bên là vùng sáng thì nó sẽ cho ta giá trị âm. Cho nên ta cần dùng hàm abs để chuyển tất cả sang số dương.
 - Horizontal edge detection
-  - Filter would be like this
+  - Filter sẽ trông như thế này:
 
     ```
     1	1	1
@@ -117,7 +117,7 @@ Here is the course summary as given on the course [link](https://www.coursera.or
     -1	-1	-1
     ```
 
-- There are a lot of ways we can put number inside the horizontal or vertical edge detections. For example here are the vertical **Sobel** filter (The idea is taking care of the middle row):
+- Có nhiều cách để ta đặt số vào filter cạnh đứng hoặc cạnh ngang. Ví dụ dưới đây là bộ filter cạnh đứng **Sobel** (Ý tưởng ở đây là chú ý đến hàng giữa):
 
   ```
   1	0	-1
@@ -133,37 +133,37 @@ Here is the course summary as given on the course [link](https://www.coursera.or
   3	0	-3
   ```
 
-- What we learned in the deep learning is that we don't need to hand craft these numbers, we can treat them as weights and then learn them. It can learn horizontal, vertical, angled, or any edge type automatically rather than getting them by hand.
+- Cái mà chúng ta học trong deep learning là để chúng ta không cần chỉnh các thông số cho filter bằng tay, chúng ta xem các thông số đó như những trọng số và sẽ được học qua quá trình huấn luyện. Có thể là filter horizontal, vertical, angled, hoặc bất kì dạng cạnh nào.
 
 ### Padding
 
-- In order to to use deep neural networks we really need to use **paddings**.
-- In the last section we saw that a `6x6` matrix convolved with `3x3` filter/kernel gives us a `4x4` matrix.
-- To give it a general rule, if a matrix `nxn` is convolved with `fxf` filter/kernel give us `n-f+1,n-f+1` matrix. 
-- The convolution operation shrinks the matrix if f>1.
-- We want to apply convolution operation multiple times, but if the image shrinks we will lose a lot of data on this process. Also the edges pixels are used less than other pixels in an image.
-- So the problems with convolutions are:
-  - Shrinks output.
-  - throwing away a lot of information that are in the edges.
-- To solve these problems we can pad the input image before convolution by adding some rows and columns to it. We will call the padding amount `P` the number of row/columns that we will insert in top, bottom, left and right of the image.
-- In almost all the cases the padding values are zeros.
-- The general rule now,  if a matrix `nxn` is convolved with `fxf` filter/kernel and padding `p` give us `n+2p-f+1,n+2p-f+1` matrix. 
-- If n = 6, f = 3, and p = 1 Then the output image will have `n+2p-f+1 = 6+2-3+1 = 6`. We maintain the size of the image.
-- Same convolutions is a convolution with a pad so that output size is the same as the input size. Its given by the equation:
+- Để dùng deep neural networks chúng ta cần dùng **paddings**.
+- Trong phần trước chúng ta đã có ví dụ với ma trận `6x6` tích chập với `3x3` filter/kernel tạo ra  ma trận `4x4`.
+- Từ đó ta có luật như sau: Nếu ma trận `nxn` tích chập với `fxf` filter/kernel sẽ tạo ra ma trận `n-f+1,n-f+1`.
+- Toán tử tích chập sẽ làm co lại ma trận đầu vào nếu f>1.
+- Chúng ta muốn dùng tích chập nhiều lần, nhưng nếu bức ảnh bị co lại thì chúng ta sẽ bị mất thông tin trong quá trình xử lý. Ngoài ra thì các pixels ở biên thường ít được quan tâm hơn những pixels khác trong 1 bức ảnh.
+- Vậy vấn đề với tích chập là:
+  - Đầu ra bị co lại.
+  - Mất nhiều thông tin ở cạnh biên.
+- Để giải quyết những vấn đề này chúng ta có thể thêm pixels vào input image trước khi tích chập bằng cách thêm vài cột và hàng. Chúng ta sẽ gọi lượng cột/hàng được thêm vào là `P` (ví dụ P = 1 nghĩa là add 4 hướng thêm một cột và hàng)
+- Trong hầu hết trường hợp, giá trị add thêm vào mỗi pixels là 0
+- Ta có quy tắc sau: nếu ma trận `nxn` tích chập với `fxf` filter/kernel và padding `p` sẽ tạo ra ma trận `n+2p-f+1,n+2p-f+1`. 
+- Nếu n = 6, f = 3, and p = 1 thì output image sẽ là `n+2p-f+1 = 6+2-3+1 = 6`. Vậy là ta đã bảo toàn được kích cỡ của ảnh.
+- Cùng phép tích chập thì số lượng pad cần để output image cùng size với input image là:
 
   ```
   P = (f-1) / 2
   ```
 
-- In computer vision f is usually odd. Some of the reasons is that its have a center value.
+- Trong computer vision f thường là số lẻ. Vì chúng ta cần filter có tâm.
 
 ### Strided convolution
 
-- Strided convolution is another piece that are used in CNNs.
+- Strided convolution là một mẫu được dùng trong CNN.
 
-- We will call stride `S`.
+- Ký hiệu stride `S`.
 
-- When we are making the convolution operation we used `S` to tell us the number of pixels we will jump when we are convolving filter/kernel. The last examples we described S was 1.
+- Khi chúng ta tạo.
 
 - Now the general rule are:
   -  if a matrix `nxn` is convolved with `fxf` filter/kernel and padding `p` and stride `s` it give us `(n+2p-f)/s + 1,(n+2p-f)/s + 1` matrix. 
