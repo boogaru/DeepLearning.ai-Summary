@@ -209,7 +209,6 @@ Here is the course summary as given on the course [link](https://www.coursera.or
 - The last example forms a layer in the CNN.
 - Gợi ý : kích thước input không ảnh hưởng đến số lượng parameters, mà nó chỉ phụ thuộc vào kích thước và số lượng channel của filter.
 - Đây là những ký hiệu sẽ sử dụng. Nếu layer l là một conv layer:
--  $n_H^{[l-1]}$, $n_W^{[l-1]}$, $n_C^{[l-1]}$
 
   ```
   Hyperparameters
@@ -233,8 +232,8 @@ Here is the course summary as given on the course [link](https://www.coursera.or
 
 ### A simple convolution network example
 
-- Lets build a big example.
-  - Input Image are:   `a0 = 39x39x3`
+- Ví dụ xây dựng hệ đơn giản với 3 lớp conv và 1 lớp FC softmax:
+  - Input Image là:   `a0 = 39x39x3`
     - `n0 = 39` and `nc0 = 3`
   - First layer (Conv layer):
     - `f1 = 3`, `s1 = 1`, and `p1 = 0`
@@ -254,7 +253,7 @@ Here is the course summary as given on the course [link](https://www.coursera.or
       - `n3 = 7`, `nc3 = 40`
   - Forth layer (Fully connected Softmax)
     - `a3 = 7x7x40 = 1960`  as a vector..
-- In the last example you seen that the image are getting smaller after each layer and thats the trend now.
+- Ta thấy kích thước ảnh đã nhỏ đi rất nhiều sau mỗi layer.
 - Types of layer in a convolutional network:
   - Convolution. 		`#Conv`
   - Pooling      `#Pool`
@@ -262,19 +261,17 @@ Here is the course summary as given on the course [link](https://www.coursera.or
 
 ### Pooling layers
 
-- Other than the conv layers, CNNs often uses pooling layers to reduce the size of the inputs, speed up computation, and to make some of the features it detects more robust.
-- Max pooling example:
+- Khác với conv layers, CNNs thường dùng pooling layers để giảm kích thước của inputs, tăng tốc độ tính toán và làm khả năng phát hiện đặc trưng mạnh mẽ hơn.
+- Ví dụ max pooling:
   - ![](Images/02.png)
-  - This example has `f = 2`, `s = 2`, and `p = 0` hyperparameters
-- The max pooling is saying, if the feature is detected anywhere in this filter then keep a high number. But the main reason why people are using pooling because its works well in practice and reduce computations.
-- Max pooling has no parameters to learn.
-- Example of Max pooling on 3D input:
+  - Các siêu tham số : `f = 2`, `s = 2`, and `p = 0`
+- Phương pháp **max pooling** như sau : lấy giá trị lớn nhất trong phạm vi của filter. Thường dùng phương pháp này vì nó hoạt động tốt khi thực nghiệm và tăng tốc tính toán.
+- Ví du Max pooling trên 3D input:
   - Input: `4x4x10`
   - `Max pooling size = 2` and `stride = 2`
   - Output: `2x2x10`
-- Average pooling is taking the averages of the values instead of taking the max values.
-- Max pooling is used more often than average pooling in practice.
-- If stride of pooling equals the size, it will then apply the effect of shrinking.
+- Average pooling sẽ lấy giá trị trung bình thay vì giá trị lớn nhất như max pooling.
+- Nếu độ trượt (stride) bằng với kích thước pooling, nó sẽ làm co input lại.
 - Hyperparameters summary
   - f : filter size.
   - s : stride.
@@ -283,7 +280,8 @@ Here is the course summary as given on the course [link](https://www.coursera.or
 
 ### Convolutional neural network example
 
-- Now we will deal with a full CNN example. This example is something like the ***LeNet-5*** that was invented by Yann Lecun.
+- Chúng ta sẽ tính toán thử với full CNN. Lấy ví dụ từ hệ thống LeNet-5:
+***LeNet-5*** Được phát minh bởi Yann Lecun.
   - Input Image are:   `a0 = 32x32x3`
     - `n0 = 32` and `nc0 = 3`
   - First layer (Conv layer):        `#Conv1`
@@ -310,9 +308,9 @@ Here is the course summary as given on the course [link](https://www.coursera.or
     - The output `a4 = 84 x 1` .
   - Fifth layer (Softmax)
     - Number of neurons is 10 if we need to identify for example the 10 digits.
-- Hint a Conv1 and Pool1 is treated as one layer.
+- Conv1 và Pool1 được xem như 1 layer.
 - Some statistics about the last example:
-  - ![](Images/03.png)
+  ![](Images/03.png)
 - Hyperparameters are a lot. For choosing the value of each you should follow the guideline that we will discuss later or check the literature and takes some ideas and numbers from it.
 - Usually the input size decreases over layers while the number of filters increases.
 - A CNN usually consists of one or more convolution (Not just one as the shown examples) followed by a pooling.
