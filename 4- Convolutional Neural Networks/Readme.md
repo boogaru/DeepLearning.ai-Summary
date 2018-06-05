@@ -312,16 +312,15 @@ Here is the course summary as given on the course [link](https://www.coursera.or
 - Some statistics about the last example:
   ![](Images/03.png)
 - Hyperparameters are a lot. For choosing the value of each you should follow the guideline that we will discuss later or check the literature and takes some ideas and numbers from it.
-- Usually the input size decreases over layers while the number of filters increases.
-- A CNN usually consists of one or more convolution (Not just one as the shown examples) followed by a pooling.
+- Thông thường thì kích thước đầu vào sẽ giảm dần theo số lượng filter
+- Một CNN thường chứa 1 hoặc nhiều conv layer + pooling layer
 - Fully connected layers has the most parameters in the network.
 - To consider using these blocks together you should look at other working examples firsts to get some intuitions.
 
 ### Why convolutions?
-
-- Two main advantages of Convs are:
-  - Parameter sharing.
-    - A feature detector (such as a vertical edge detector) that's useful in one part of the image is probably useful in another part of the image.
+- Hai lý do chính để dùng tích chập là :
+    + Share parameter
+        + A feature detector (such as a vertical edge detector) that's useful in one part of the image is probably useful in another part of the image.
   - sparsity of connections.
     - In each layer, each output value depends only on a small number of inputs which makes it translation invariance.
 - Putting it all together:
