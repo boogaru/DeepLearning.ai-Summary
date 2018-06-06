@@ -587,19 +587,19 @@ Here is the course summary as given on the course [link](https://www.coursera.or
     - Bạn muốn giải bài toán phân loại mèo với 3 class: Tigger, Misty và khác.
     - Bạn không có nhiều data để train NN.
     - Andrew đề xuất lên mạng và download 1 model NN với trọng số đầy đủ, bỏ layer kích hoạt softmax và đặt vào đó hàm kích hoạt của bạn và bắt đầu train network với chỉ layer mới thêm vào trong khi những trọng số của layer khác thì được giữ nguyên.
-    - Frameworks có lựa chọn cho phép chọn giữ nguyên parameters trong vài layers dùng `trainable = 0` or `freeze = 0`
-  - One of the tricks that can speed up your training, is to run the pretrained NN without final softmax layer and get an intermediate representation of your images and save them to disk. And then use these representation to a shallow NN network. This can save you the time needed to run an image through all the layers.
-    - Its like converting your images into vectors.
-- Another example:
-  - What if in the last example you have a lot of pictures for your cats.
-  - One thing you can do is to freeze few layers from the beginning of the pretrained network and learn the other weights in the network.
-  - Some other idea is to throw away the layers that aren't frozen and put your own layers there.
-- Another example:
-  - If you have enough data, you can fine tune all the layers in your pretrained network but don't random initialize the parameters, leave the learned parameters as it is and learn from there. 
+    - One of the tricks that can speed up your training, is to run the pretrained NN without final softmax layer and get an intermediate representation of your images and save them to disk. And then use these representation to a shallow NN network. This can save you the time needed to run an image through all the layers.
+        - Its like converting your images into vectors.
+
+- Một ví dụ khác:
+    - Sẽ như thế nào nếu bạn có thật nhiều ảnh mèo cho ví dụ ở trên.
+    - Điều duy nhất bạn có thể làm là đóng băng vài layers khi bắt đầu pretrain network và học các trọng số trong network.
+    - Có vài ý kiến khác là bỏ đi những layer không đóng băng và đặt layer mới vào.
+- Một ví dụ khác:
+    - Nếu bạn có đủ data, bạn có thể tinh chỉnh tất cả layer trong mạng pretrain của bạn hoặc không cần khởi tạo các parameter ngẫu nhiên, chỉ cần dùng lại các parameter đã được train. Và mạng mới sẽ bắt đầu train với những parameter đó.
 
 ### Data Augmentation
 
-- If data is increased, your deep NN will perform better. Data augmentation is one of the techniques that deep learning uses to increase the performance of deep NN.
+- Nếu data tăng lên, mạng deep NN sẽ tăng hiệu quả. Tăng cường data (data augmentation) là một trong nhưng kĩ thuật được áp dụng trong deep learning để tăng hiệu quả của NN.
 - The majority of computer vision applications needs more data right now.
 - Some data augmentation methods that are used for computer vision tasks includes:
   - Mirroring.
@@ -620,14 +620,14 @@ Here is the course summary as given on the course [link](https://www.coursera.or
 
 ### State of Computer Vision
 
-- For a specific problem we may have a little data for it or a lots of data.
+- Trong những bài toán cụ thể có thể bạn sẽ có ít hoặc nhiều data.
 - Speech recognition problems for example has a big amount of data, while image recognition has a medium amount of data and the object detection has a small amount of data nowadays.
-- If your problem has a large amount of data, researchers are tend to use:
+- Nếu bài toán của bạn có lượng lớn data, người nghiên cứu sẽ dùng:
   - Simpler algorithms.
   - Less hand engineering.
-- If you don't have that much data people tend to try more hand engineering for the problem "Hacks". Like choosing a more complex NN architecture.
-- Because we haven't got that much data in a lot of computer vision problems, it relies a lot on hand engineering.
-- We will see in the next chapter that because the object detection has less data, a more complex NN architectures will be presented.
+- Nếu không đủ data, thì sẽ tốn nhiều công sức hơn như là : chọn mạng NN phức tạp hơn.
+- Vì chúng ta không có nhiều data cho lĩnh vực computer vision, nên phải phụ thuộc nhiều vào hand engineering.
+- Chúng ta sẽ xem ở chapter kế, trong việc Object dectection có rất ít data, sẽ phải dùng một mạng NN rất phức tạp
 - Tips for doing well on benchmarks/winning competitions:
   - Ensembling.
     - Train several networks independently and average their outputs. Merging down some classifiers.
@@ -646,36 +646,36 @@ Here is the course summary as given on the course [link](https://www.coursera.or
 
 ## Object detection
 
-> Learn how to apply your knowledge of CNNs to one of the toughest but hottest field of computer vision: Object detection.
+> Chúng ta sẽ học cách nào ứng dụng CNN vào một trong những lĩnh vực khó nhất và hot nhất của thị giác máy tính: object detection.
 
 ### Object Localization
 
-- Object detection is one of the areas in which deep learning is doing great in the past two years.
+- Object detection là một trong những lĩnh vực mà deep learning đã làm rất tốt trong 2 năm qua.
 
 - What are localization and detection?
 
   - **Image Classification**: 
-    - Classify an image to a specific class. The whole image represents one class. We don't want to know exactly where are the object. Usually only one object is presented.
-    - ![](Images/Classification.jpg)
+    - Là kiểu Phân loại 1 tấm hình vào 1 class cụ thể. Toàn bộ tấm hình đại diện cho 1 class. Chúng ta không muốn biết chính xác vật thể nằm ở đâu. Thông thường thì chỉ có 1 vật thể trong ảnh.
+     ![](Images/Classification.jpg)
   - **Classification with localization**:
-    - Given an image we want to learn the class of the image and where are the class location in the image. We need to detect a class and a rectangle of where that object is. Usually only one object is presented.
-    - ![](Images/ClassificationLoc.jpg)
+    - Đưa ra 1 tấm ảnh với class không phải là cả tấm ảnh mà là 1 đối tượng trong tấm ảnh đó. Chúng ta cần phát hiện ra class và dfung 1 khung chữ nhật để bao quanh nó. Thường chỉ có 1 object bên trong ảnh.
+     ![](Images/ClassificationLoc.jpg)
   - **Object detection**:
-    - Given an image we want to detect all the object in the image that belong to a specific classes and give their location. An image can contain more than one object with different classes.
-    - ![](Images/ObjectDetection.png)
+    - Đưa ra 1 tấm ảnh chúng ta muốn phát hiện tất cả object bên trong ảnh và phân loại nó ra từng class cụ thể. Một tấm ảnh có thể có nhiều class khác nhau.
+    ![](Images/ObjectDetection.png)
   - **Semantic Segmentation**:
-    - We want to Label each pixel in the image with a category label. Semantic Segmentation Don't differentiate instances, only care about pixels. It detects no objects just pixels.
-    - If there are two objects of the same class is intersected, we won't be able to separate them.
+    - Chúng ta muốn đánh nhãn cho mỗi pixel bên trong tấm hình với một danh mục các nhãn biết trước. Semantic segmentation không phân biệt các vật cụ thể, chỉ quan tâm đến pixel. Nó phát hiện pixels chứ ko phát hiện vật thể.
+    - Nếu có 2 object của cùng 1 class, chúng ta sẽ ko thể phân biệt được chúng.
     - ![](Images/SemanticSegmentation.png)
   - **Instance Segmentation**
-    - This is like the full problem. Rather than we want to predict the bounding box, we want to know which pixel label but also distinguish them.
-    - ![](Images/InstanceSegmentation.png)
+    - Loại này như 1 bài toán tổng quát. Thay vì chúng ta muốn dự đoán cái bounding box, thì chúng ta lại muốn biết pixel label cũng như phân biệt chúng.
+    ![](Images/InstanceSegmentation.png)
 
-- To make image classification we use a Conv Net with a Softmax attached to the end of it.
+- Giải bài toán image classification --> dùng Conv net với Softmax ở layer cuối
 
-- To make classification with localization we use a Conv Net with a softmax attached to the end of it and a four numbers `bx`, `by`, `bh`, and `bw` to tell you the location of the class in the image. The dataset should contain this four numbers with the class too.
+- Giải bài toán Classification with localization --> dùng Conv net với softmax ở layer cuối và một bộ 4 số `bx`, `by`, `bh`, `bw` để xác định vị trí của class trong image. Dataset nên chứa bộ 4 số này chung với class.
 
-- Defining the target label Y in classification with localization problem: 
+- Cấu trúc của target label Y trong classification with localization problem: 
 
   - ```
     Y = [
@@ -756,32 +756,34 @@ Here is the course summary as given on the course [link](https://www.coursera.or
 
 ### Object Detection
 
-- We will use a Conv net to solve the object detection problem using a technique called the sliding windows detection algorithm.
-- For example lets say we are working on Car object detection.
-- The first thing, we will train a Conv net on cropped car images and non car images.
-  - ![](Images/18.png)
-- After we finish training of this Conv net we will then use it with the sliding windows technique.
+- Chúng ta sẽ dùng Conv net để giải bài toán object detection, sử dụng kỹ thuật gọi là cửa sổ trượt.
+- Thuật toán đóa hoạt động như sau: ta đã xây dựng được Conv net, trong 1 tấm ảnh lớn thì tạo ra 1 sliding window cho nó trượt hết các vùng trong tấm ảnh, rồi lấy từng giữ liệu đó cho vào Conv net.
+- Ví dụ : ta đang giải quyết bài toán nhận dạng xe hơi.
+- Đầu tiên, chúng ta sẽ train 1 Conv net trên ảnh đã crop chứa xe hơi và không chứa xe hơi.
+  ![](Images/18.png)
+- Sau khi training, chúng ta sẽ dùng nó kết hợp kỹ thuật cửa sổ trượt.
 - Sliding windows detection algorithm:
-  1. Decide a rectangle size.
-  2. Split your image into rectangles of the size you picked. Each region should be covered. You can use some strides.
-  3. For each rectangle feed the image into the Conv net and decide if its a car or not.
-  4. Pick larger/smaller rectangles and repeat the process from 2 to 3.
-  5. Store the rectangles that contains the cars.
-  6. If two or more rectangles intersects choose the rectangle with the best accuracy.
-- Disadvantage of sliding window is the computation time.
+  1. Quyết định kích cỡ của hình chữ nhật (bounding box).
+  2. Chia tấm ảnh thành những hình chữa nhật (với kích thước đã chọn ở trên). Nên bao trùm tất cả các vùng. Bạn có thể dùng vài strides.
+  3.Với mỗi hình chữ nhật (ma trận) hãy nạp nó vào mạng Conv để quyết định xem nó có phải oto hay không
+  4. Chọn bounding box nhỏ hơn hoặc lớn hơn và lặp lại quá trình 2 đến 3 lần.
+  5. Lưu lại hình chữ nhật có chứa ô tô.
+  6. Nếu hai hoặc hơn số hình chữ nhật cắt nhau, hãy chọn hình chữ nhật có độ chính xác cao hơn (xác suất cao hơn).
+- Nhược điểm của cửa sổ trượt là thời gian tính toán.
 - In the era of machine learning before deep learning, people used a hand crafted linear classifiers that classifies the object and then use the sliding window technique. The linear classier make it a cheap computation. But in the deep learning era that is so  computational expensive due to the complexity of the deep learning model.
-- To solve this problem, we can implement the sliding windows with a ***Convolutional approach***.
-- One other idea is to compress your deep learning model.
+- Để giải quyết vấn đề khối lượng tính toán, chúng ta có thể triển khai cửa sổ trượt với ***Convolutional approach***.
+- Một ý tưởng khác là giảm kích thước model deep learning lại.
 
 ### Convolutional Implementation of Sliding Windows
 
-- Turning FC layer into convolutional layers (predict image class from four classes):
-  - ![](Images/19.png)
-  - As you can see in the above image, we turned the FC layer into a Conv layer using a convolution with the width and height of the filter is the same as the width and height of the input.
+- Chuyển FC layer thành conv layer (predict image class from four classes):
+   ![](Images/19.png)
+    - Ảnh 14x14x3 + 16 filter 5x5 --> 10x10x6... qua các giai đoạn thì giảm còn 5x5x16 và sau đó dùng layer FC để kết nối 400 units và thêm 1 layer FC nữa và cuối cùng ouput y dùng softmax.
+    - Như hình trên thì chúng ta đã chuyển FC layer sang Conv layer bằng cách dùng 1 filter có height và width bằng với input.
 - **Convolution implementation of sliding windows**:
   - First lets consider that the Conv net you trained is like this (No FC all is conv layers):
-    - ![](Images/20.png)
-  - Say now we have a 16 x 16 x 3 image that we need to apply the sliding windows in. By the normal implementation that have been mentioned in the section before this, we would run this Conv net four times each rectangle size will be 16 x 16.
+     ![](Images/20.png)
+  - Giờ ta có tấm ảnh 16x16x3 và ta sẽ áp dụng cửa sổ trượt với nó.
   - The convolution implementation will be as follows:
     - ![](Images/21.png)
   - Simply we have feed the image into the same Conv net we have trained.
