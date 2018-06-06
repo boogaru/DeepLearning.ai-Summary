@@ -1,6 +1,6 @@
 # Convolutional Neural Networks
 
-This is the forth course of the deep learning specialization at [Coursera](https://www.coursera.org/specializations/deep-learning) which is moderated by [DeepLearning.ai](http://deeplearning.ai/). The course is taught by Andrew Ng.
+Đây là course thứ 4 trong loạt bài hướng dẫn deep learning tại [Coursera](https://www.coursera.org/specializations/deep-learning) which is moderated by [DeepLearning.ai](http://deeplearning.ai/). Khóa học được hướng dẫn bởi Andrew Ng.
 
 ## Table of contents
 
@@ -352,13 +352,13 @@ Here is the course summary as given on the course [link](https://www.coursera.or
 - **LeNet-5**
     - Mục tiêu của model này là xác định số viết tay ở dạng ảnh xám `32x32x1`. Đây là hình ảnh của nó
    ![](Images/05.png)
-    - Model này được xuất bản năm 1998. Layer cuối cùng ko dùng softmax.
+    - Model này được xuất bản năm 1998. Layer cuối cùng dùng softmax.
     - Nó có 60k parameters.
     - Chiều của ảnh giảm khi số lượng channels tăng lên
     - `Conv ==> Pool ==> Conv ==> Pool ==> FC ==> FC ==> softmax`
     - Hàm kích hoạt được dùng trong paper là Sigmod và Tanh. Ngày nay hàm RELU được dùng trong hầu hết các trường hợp.
   
-  - [[LeCun et al., 1998. Gradient-based learning applied to document recognition]](http://ieeexplore.ieee.org/document/726791/?reload=true)
+    - [[LeCun et al., 1998. Gradient-based learning applied to document recognition]](http://ieeexplore.ieee.org/document/726791/?reload=true)
 
 - **AlexNet**
     + Mục tiêu của model là phân ra 1000 class. Đây là hình vẽ của model
@@ -366,38 +366,32 @@ Here is the course summary as given on the course [link](https://www.coursera.or
 
     + Tổng kết:
 
-    - ```
+    ```
       Conv => Max-pool => Conv => Max-pool => Conv => Conv => Conv => Max-pool ==> Flatten ==> FC ==> FC ==> Softmax
-      ```
+    ```
 
-  -y1- Tương tự LeNet-5 nhưng lớn hơn
-  -y1- Có 60 triệu parameter.
-  -y1- Dùng hàm kích hoạt RELU
+    - Tương tự LeNet-5 nhưng lớn hơn
+    - Có 60 triệu parameter.
+    - Dùng hàm kích hoạt RELU 
+    - The original paper sử dụng nhiều GPUs và chuẩn hóa phản hồi cục bộ (Local response normalization - RN).
+        - Dùng nhiều GPU vì nó đẩy nhanh tốc độ tính toán.
+        - Những nhà nghiên cứu đã chứng minh RN không giúp gì nhiều cho CNN nên chúng ta không cần quan tâm đến nó
 
-  - Has 60 Million parameter compared to 60k parameter of LeNet-5.
+    - Bài báo sau đây đã thuyết phục giới nghiên cứu thị giác máy tính về sự quan trọng của deep learning:
 
-  - It used the RELU activation function.
-
-  - The original paper contains Multiple GPUs and Local Response normalization (RN).
-
-    - Multiple GPUs were used because the GPUs were not so fast back then.
-    - Researchers proved that Local Response normalization doesn't help much so for now don't bother yourself for understanding or implementing it. 
-
-  - This paper convinced the computer vision researchers that deep learning is so important.
-
-  - [[Krizhevsky et al., 2012. ImageNet classification with deep convolutional neural networks]](https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf)
+    - [[Krizhevsky et al., 2012. ImageNet classification with deep convolutional neural networks]](https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf)
 
 - **VGG-16**
 
-  - A modification for AlexNet.
-  - Instead of having a lot of hyperparameters lets have some simpler network.
-  - Focus on having only these blocks:
+  - Là phiên bản sửa đổi của AlexNet.
+  - Thay vì dùng nhiều siêu tham số(hyperparameters) thì sẽ sử dụng những mạng đơn giản hơn.
+  - Tập trung vào các block sau:
     - CONV = 3 X 3 filter, s = 1, same  
     - MAX-POOL = 2 X 2 , s = 2
   - Here are the architecture:
     - ![](Images/07.png)
-  - This network is large even by modern standards. It has around 138 million parameters.
-    - Most of the parameters are in the fully connected layers.
+  - Nhưng mạng này vẫn lớn ngay cả với tiêu chuẩn hiện nay. Nó tầm khoảng 138 triệu parameters.
+    - Hầu hết the parameters nằm trong layer fully connected.
   - It has a total memory of 96MB per image for only forward propagation!
     - Most memory are in the earlier layers.
   - Number of filters increases from 64 to 128 to 256 to 512. 512 was made twice.
@@ -583,14 +577,17 @@ Here is the course summary as given on the course [link](https://www.coursera.or
 
 ### Transfer Learning
 
-- If you are using a specific NN architecture that has been trained before, you can use this pretrained parameters/weights instead of random initialization to solve your problem.
-- It can help you boost the performance of the NN.
-- The pretrained models might have trained on a large datasets like ImageNet, Ms COCO, or pascal and took a lot of time to learn those parameters/weights with optimized hyperparameters. This can save you a lot of time.
-- Lets see an example:
-  - Lets say you have a cat classification problem which contains 3 classes Tigger, Misty and neither.
-  - You don't have much a lot of data to train a NN on these images.
-  - Andrew recommends to go online and download a good NN with its weights, remove the softmax activation layer and put your own one and make the network learn only the new layer while other layer weights are fixed/frozen.
-  - Frameworks have options to make the parameters frozen in some layers using `trainable = 0` or `freeze = 0`
+- Nếu bạn đang dùng một kiến trúc NN cụ thể nào đó đã được train từ trước, bạn có thể dùng nó để pretrain parameters/weights thay vì khởi tạo ngẫu nhiên, để giải quyết bài toán của bạn.
+
+- Điều này có thể giúp bạn boost hiệu suất của NN.
+
+- Pretrained models có thể đã được train trên dataset rất lớn như Imagenet, Ms CÔC, hoặc pascal và đã tốn rất nhiều thời gian để learn những parameters/weights đã được tối ưu. Tận dụng nó bạn sẽ tiết kiệm được rất nhiều thời gian.
+
+- Hãy xem ví dụ sau:
+    - Bạn muốn giải bài toán phân loại mèo với 3 class: Tigger, Misty và khác.
+    - Bạn không có nhiều data để train NN.
+    - Andrew đề xuất lên mạng và download 1 model NN với trọng số đầy đủ, bỏ layer kích hoạt softmax và đặt vào đó hàm kích hoạt của bạn và bắt đầu train network với chỉ layer mới thêm vào trong khi những trọng số của layer khác thì được giữ nguyên.
+    - Frameworks có lựa chọn cho phép chọn giữ nguyên parameters trong vài layers dùng `trainable = 0` or `freeze = 0`
   - One of the tricks that can speed up your training, is to run the pretrained NN without final softmax layer and get an intermediate representation of your images and save them to disk. And then use these representation to a shallow NN network. This can save you the time needed to run an image through all the layers.
     - Its like converting your images into vectors.
 - Another example:
