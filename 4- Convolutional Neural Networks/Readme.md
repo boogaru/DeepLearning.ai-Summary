@@ -677,7 +677,7 @@ Here is the course summary as given on the course [link](https://www.coursera.or
 
 - Cấu trúc của target label Y trong classification with localization problem: 
 
-  - ```
+    ```
     Y = [
       		Pc				# Probability of an object is presented
       		bx				# Bounding box
@@ -692,7 +692,7 @@ Here is the course summary as given on the course [link](https://www.coursera.or
 
   - Example (Object is present):
 
-    - ```
+    ```
       Y = [
         		1		# Object is present
         		0
@@ -703,11 +703,11 @@ Here is the course summary as given on the course [link](https://www.coursera.or
         		1
         		0
       ]
-      ```
+    ```
 
   - Example (When object isn't presented):
 
-    - ```
+    ```
       Y = [
         		0		# Object isn't presented
         		?		# ? means we dont care with other values
@@ -718,7 +718,7 @@ Here is the course summary as given on the course [link](https://www.coursera.or
         		?
         		?
       ]
-      ```
+    ```
 
 - The loss function for the Y we have created (Example of the square error):
 
@@ -757,7 +757,7 @@ Here is the course summary as given on the course [link](https://www.coursera.or
 ### Object Detection
 
 - Chúng ta sẽ dùng Conv net để giải bài toán object detection, sử dụng kỹ thuật gọi là cửa sổ trượt.
-- Thuật toán đóa hoạt động như sau: ta đã xây dựng được Conv net, trong 1 tấm ảnh lớn thì tạo ra 1 sliding window cho nó trượt hết các vùng trong tấm ảnh, rồi lấy từng giữ liệu đó cho vào Conv net.
+- Thuật toán đó hoạt động như sau: ta đã xây dựng được Conv net, trong 1 tấm ảnh lớn thì tạo ra 1 sliding window cho nó trượt hết các vùng trong tấm ảnh, rồi lấy từng giữ liệu đó cho vào Conv net.
 - Ví dụ : ta đang giải quyết bài toán nhận dạng xe hơi.
 - Đầu tiên, chúng ta sẽ train 1 Conv net trên ảnh đã crop chứa xe hơi và không chứa xe hơi.
   ![](Images/18.png)
@@ -776,6 +776,7 @@ Here is the course summary as given on the course [link](https://www.coursera.or
 
 ### Convolutional Implementation of Sliding Windows
 
+- Để hạn chế việc phải slide quá nhiều lần. Thì ta sẽ tích hợp cửa sổ trượt vào Convnet luôn, bằng cách thay các layer FC bằng Conv layer. Sau đó, đưa cả tấm ảnh chứa nhiều vật thể vào Convnet vừa tạo được luôn.
 - Chuyển FC layer thành conv layer (predict image class from four classes):
    ![](Images/19.png)
     - Ảnh 14x14x3 + 16 filter 5x5 --> 10x10x6... qua các giai đoạn thì giảm còn 5x5x16 và sau đó dùng layer FC để kết nối 400 units và thêm 1 layer FC nữa và cuối cùng ouput y dùng softmax.
@@ -793,8 +794,8 @@ Here is the course summary as given on the course [link](https://www.coursera.or
     - ![](Images/22.png)
   - This example has a total of 16 sliding windows that shares the computation together.
   - [[Sermanet et al., 2014, OverFeat: Integrated recognition, localization and detection using convolutional networks]](https://arxiv.org/abs/1312.6229)
-- The weakness of the algorithm is that the position of the rectangle wont be so accurate. Maybe none of the rectangles is exactly on the object you want to recognize.
-  - ![](Images/23.png)
+- Điểm yếu của phương pháp này chính là vị trí của bounding box không chính xác. Có thể không có bounding box nào chính xác vị trí của đối tượng bạn muốn nhận dạng
+   ![](Images/23.png)
   - In red, the rectangle we want and in blue is the required car rectangle.
 
 ### Bounding Box Predictions
